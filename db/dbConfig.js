@@ -2,7 +2,7 @@ const pgp = require('pg-promise')()
 // Line below loads the environment variables in
 require('dotenv').config()
 
-// PG_PASSWORD does not exist locally, but it does exist and is require on Render when we deploy. So we add it to our `cn` object so the production environment can find it and use it.
+// PG_PASSWORD does not exist locally, but it does exist and is required on Render when we deploy. So we add it to our `cn` object so the production environment can find it and use it.
 const cn = {
     host: process.env.PG_HOST,
     port: process.env.PG_PORT,
