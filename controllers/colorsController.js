@@ -1,6 +1,6 @@
 const express = require('express')
 const colors = express.Router()
-const { getAllColors, getColor, createColor } = require('../queries/color')
+const { getAllColors, getColor, createColor, deleteColor, updateColor } = require('../queries/color')
 const { checkName } = require('../validations/checkColors')
 
 
@@ -28,7 +28,28 @@ colors.get('/:id', async (req, res) => {
 // Create: localhost:4001/colors/
 colors.post('/', checkName, async (req, res) => {
     const newColor = await createColor(req.body)
-    res.json(newColor)
+    res.status(201).json(newColor)
+})
+
+// Delete: localhost:4001/colors/1
+colors.delete("/:id", async (req, res) => {
+    const { id } = req.params
+    const deletedColor = await deleteColor(id)
+    if(deletedColor.id){
+        res.status(200).json({ message: "Successfully deleted color." })
+    } else {
+        res.status(404).json({ error: "Color Not Found." })
+    }
+})
+
+colors.put("/:id", checkName, async (req, res) => {
+    const { id } = req.params
+    const updatedColor = await updateColor(id, req.body)
+    if(updatedColor.id){
+        res.status(200).json(updatedColor)
+    } else {
+        res.status(404).json({ error: "Color Not Found." })
+    }
 })
 
 module.exports = colors
