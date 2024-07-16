@@ -42,6 +42,7 @@ colors.delete("/:id", async (req, res) => {
     }
 })
 
+// Update: localhost:4001/colors/1
 colors.put("/:id", checkName, async (req, res) => {
     const { id } = req.params
     const updatedColor = await updateColor(id, req.body)
